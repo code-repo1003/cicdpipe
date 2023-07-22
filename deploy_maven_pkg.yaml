@@ -1,5 +1,5 @@
 ---
-- hosts: targetnode1
+- hosts: node1
   become: true
   tasks:
   - name: update apt-get repo
