@@ -1,0 +1,13 @@
+---
+- hosts: webhosts
+  become: true
+  tasks:
+  - name: update apt-get repo
+    command: sudo apt-get update
+  - name: Install maven on worker nodes
+    command: sudo apt-get install maven -y
+  - name: Install docker on worker nodes
+    command: sudo apt-get install docker-ce -y
+  - name: Start docker service
+    service: name=docker state=started
+    

@@ -1,0 +1,15 @@
+---
+hosts: webhosts
+become: true
+tasks:
+- name: Clone the repo from github with java code on worker
+  git: repo=https://github.com/Sonal0409/DevOpsCodeDemo.git dest=/tmp/appcode
+
+- name: Build code using Maven
+  command: chdir=/tmp/appcode-repo mvn package
+- name: Copy addressbook.war to current directory
+  copy: src=/tmp/appcode/target/addressbook.war dest=/tmp/appcode remote_src=yes
+- name: Build the dockerfile
+  command: docker build -t myimage:ansible .
+- name: Run the image to deploy in tomcat container
+  command: docker run -d -P myimage:ansible 
